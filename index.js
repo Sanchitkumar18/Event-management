@@ -14,6 +14,6 @@ app.use(express.json())
 // app.use('/api/notes',require('./routes/notes'))
 
 app.listen(port, () => {
-  console.log(`iNotebook app listening on port ${port}`)
+  console.log(`EventManagement app listening on port ${port}`)
 })
  
