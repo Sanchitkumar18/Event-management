@@ -34,15 +34,24 @@ router.post('/create', fetchusers, checkRole('organizer'), [
 // 🔹 Route 2: Get all public events & user's private events
 router.get('/fetchall', fetchusers, async (req, res) => {
     try {
-        const events = await Event.find({
-            $or: [{ eventType: 'public' }, { organizer: req.user.id }]
-        });
+        let events;
+        
+        if (req.user.role === 'organizer' || req.user.role === 'attendee') {
+            // Organizers can see all events (public & private)
+            events = await Event.find();
+        }
+         else {
+            // Normal users can only see public events
+            events = await Event.find({ eventType: 'public' });
+        }
+
         res.json(events);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 
 // 🔹 Route 3: Update event (Only Organizer)
 router.put('/update/:id', fetchusers, checkRole('organizer'), async (req, res) => {

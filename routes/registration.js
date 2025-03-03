@@ -31,3 +31,5 @@ router.post('/register/:eventId', fetchusers, checkRole('attendee'), async (req,
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+module.exports = router;
