@@ -61,6 +61,12 @@ npm start
   "role": "organizer"
 }
 ```
+```json
+{
+    "success": true,
+    "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjdjOWQ2YTQ4YzFiNDMwMDY4ODllNGY3Iiwicm9sZSI6Im9yZ2FuaXplciJ9LCJpYXQiOjE3NDEyODA5MzJ9.BRM6dnjJfnsj8EZw9BgUUUSB1_cXervyz-yh8VKah9o"
+}
+```
 
 #### User Login
 **Endpoint:** `POST /api/auth/login`
@@ -68,6 +74,12 @@ npm start
 {
   "email": "organiser5@example.com",
   "password": "Sk12345"
+}
+```
+```json
+{
+    "success": true,
+    "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjdjOWQ2YTQ4YzFiNDMwMDY4ODllNGY3Iiwicm9sZSI6Im9yZ2FuaXplciJ9LCJpYXQiOjE3NDEyODEyMTd9.l2FFsKZj5K9rlm3SwLDQyVQC67LuDivX_j7NwLDlbvE"
 }
 ```
 
@@ -116,9 +128,45 @@ npm start
   ]
 }
 ```
+```json
+{
+{
+    "title": "Debate competition 2025",
+    "description": "A Tech event",
+    "date": "2025-12-18T00:00:00.000Z",
+    "location": "Anna Auditorium",
+    "event_type": "public",
+    "organizer": "67c9d6a48c1b43006889e4f7",
+    "attendees": [],
+    "attended": [],
+    "tickets": [
+        {
+            "tier": "Regular",
+            "price": 150,
+            "available_quantity": 100,
+            "_id": "67c9da42ad49e009bf396893"
+        }
+    ],
+    "_id": "67c9da42ad49e009bf396892",
+    "__v": 0
+}
+```
 
 #### Update an event (Only Organizers)
 **Endpoint:** `PUT /api/event/update/{eventId}`
+```json
+{
+{
+    "title": "Drawing competition 2025",
+    "description": "A Tech event",
+    "date": "2025-12-18",
+    "location": "Anna Auditorium",
+    "event_type": "public",
+    "tickets": [
+        { "tier": "Regular", "price": 150, "available_quantity": 100 }
+    ]
+}
+```
 ```json
 {
     "_id": "67c9d958ad49e009bf396888",
@@ -161,6 +209,12 @@ npm start
 
 #### QR Code Scanning (Only Organizers)
 **Endpoint:** `POST /api/registration/scan`
+```json
+{
+    "qrData": "{\"eventId\": \"67c9da42ad49e009bf396892\", \"userId\": \"67c9ccee65d71c13c091439d\"}"
+}
+
+```
 ```json
 {
     "message": "Attendance marked successfully"
