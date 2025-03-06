@@ -50,12 +50,39 @@ router.post('/create', fetchusers, checkRole('organizer'), [
 // 🔹 Route 2: Get all public events & user's private events
 router.get('/fetchall', fetchusers, async (req, res) => {
     try {
-        let events;
-        if (req.user.role === 'organizer' || req.user.role === 'attendee') {
-            events = await Event.find();
-        } else {
-            events = await Event.find({ event_type: 'public' });
+        const { date, location, event_type, search } = req.query;
+        let query = {};
+
+        //  Filter by event type (public/private)
+        if (event_type) {
+            query.event_type = event_type;
         }
+
+        //  Filter by date (ISO format expected)
+        if (date) {
+            query.date = { $gte: new Date(date) }; // Fetch events on or after the given date
+        }
+
+        //  Filter by location (Case-insensitive)
+        if (location) {
+            query.location = new RegExp(location, 'i'); // 'i' makes it case insensitive
+        }
+
+        //  Search by title or description (Case-insensitive)
+        if (search) {
+            query.$or = [
+                { title: new RegExp(search, 'i') }, // Matches title
+                { description: new RegExp(search, 'i') } // Matches description
+            ];
+        }
+
+        //  Restrict normal users to only public events
+        if (req.user.role !== 'organizer' && req.user.role !== 'attendee') {
+            query.event_type = 'public';
+        }
+
+        //  Fetch and return filtered events
+        const events = await Event.find(query);
         res.json(events);
     } catch (err) {
         console.error(err);
