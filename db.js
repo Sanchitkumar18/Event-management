@@ -1,7 +1,12 @@
-const mongoose=require('mongoose')
-const mongoURI="mongodb://localhost:27017/eventManagement"
+require('dotenv').config();
+const mongoose = require('mongoose');
+
+const mongoURI = process.env.MONGO_URI;
+
 async function connectToMongo() {
-    await mongoose.connect(mongoURI).then(()=> console.log("Connected to Mongo Successfully")).catch(err => console.log(err));
-  }
-  
-module.exports=connectToMongo;
+    await mongoose.connect(mongoURI)
+    .then(() => console.log("Connected to Mongo Successfully"))
+    .catch(err => console.log("MongoDB Connection Error:", err));
+}
+
+module.exports = connectToMongo;
