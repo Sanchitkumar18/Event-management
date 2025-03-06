@@ -82,6 +82,19 @@ npm start
     "authtoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjdjOWQ2YTQ4YzFiNDMwMDY4ODllNGY3Iiwicm9sZSI6Im9yZ2FuaXplciJ9LCJpYXQiOjE3NDEyODEyMTd9.l2FFsKZj5K9rlm3SwLDQyVQC67LuDivX_j7NwLDlbvE"
 }
 ```
+#### Get user data
+**Endpoint:** `POST /api/auth/getuser`
+```json
+{
+    "_id": "67c9d6a48c1b43006889e4f7",
+    "name": "Shyam",
+    "email": "organiser5@example.com",
+    "role": "organizer",
+    "createdAt": "2025-03-06T17:08:52.176Z",
+    "updatedAt": "2025-03-06T17:08:52.176Z",
+    "__v": 0
+}
+```
 
 ### Events Management
 #### Fetch all events
