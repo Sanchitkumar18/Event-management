@@ -11,18 +11,34 @@ router.post('/create', fetchusers, checkRole('organizer'), [
     body('description', 'Description is required').notEmpty(),
     body('date', 'Valid date is required').isISO8601(),
     body('location', 'Location is required').notEmpty(),
-    body('eventType', 'Event type (public/private) is required').isIn(['public', 'private']),
+    body('event_type', 'Event type (public/private) is required').isIn(['public', 'private']),
+    body('tickets').optional().isArray().withMessage('Tickets must be an array'),
+    body('tickets.*.tier').optional().isIn(['Regular', 'VIP']).withMessage('Invalid ticket tier'),
+    body('tickets.*.price').optional().isNumeric().withMessage('Price must be a number'),
+    body('tickets.*.available_quantity').optional().isInt({ min: 0 }).withMessage('Available quantity must be a non-negative integer')
 ], async (req, res) => {
     try {
-        const { title, description, date, location, eventType } = req.body;
+        const { title, description, date, location, event_type, tickets = [] } = req.body;
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
+
+        // If no tickets are provided, set default Regular ticket
+        const finalTickets = Array.isArray(tickets) && tickets.length > 0
+            ? tickets
+            : [{ tier: 'Regular', price: 0, available_quantity: 100 }];
+
         const event = new Event({
-            title, description, date, location, eventType,
-            organizer: req.user.id // Only organizers can create events
+            title,
+            description,
+            date,
+            location,
+            event_type,
+            organizer: req.user.id,
+            tickets: finalTickets
         });
+
         await event.save();
         res.json(event);
     } catch (err) {
@@ -35,16 +51,11 @@ router.post('/create', fetchusers, checkRole('organizer'), [
 router.get('/fetchall', fetchusers, async (req, res) => {
     try {
         let events;
-        
         if (req.user.role === 'organizer' || req.user.role === 'attendee') {
-            // Organizers can see all events (public & private)
             events = await Event.find();
+        } else {
+            events = await Event.find({ event_type: 'public' });
         }
-         else {
-            // Normal users can only see public events
-            events = await Event.find({ eventType: 'public' });
-        }
-
         res.json(events);
     } catch (err) {
         console.error(err);
@@ -52,10 +63,13 @@ router.get('/fetchall', fetchusers, async (req, res) => {
     }
 });
 
-
 // 🔹 Route 3: Update event (Only Organizer)
-router.put('/update/:id', fetchusers, checkRole('organizer'), async (req, res) => {
-    const { title, description, date, location, eventType } = req.body;
+router.put('/update/:id', fetchusers, checkRole('organizer'), [
+    body('tickets').optional().isArray().withMessage('Tickets must be an array'),
+    body('tickets.*.tier').optional().isIn(['Regular', 'VIP']).withMessage('Invalid ticket tier'),
+    body('tickets.*.price').optional().isNumeric().withMessage('Price must be a number'),
+    body('tickets.*.available_quantity').optional().isInt({ min: 0 }).withMessage('Available quantity must be a non-negative integer')
+], async (req, res) => {
     try {
         let event = await Event.findById(req.params.id);
         if (!event) return res.status(404).json({ error: "Event not found" });
@@ -64,7 +78,13 @@ router.put('/update/:id', fetchusers, checkRole('organizer'), async (req, res) =
             return res.status(403).json({ error: "Not authorized" });
         }
 
-        event = await Event.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
+        // Allow updating tickets
+        const updatedData = { ...req.body };
+        if (req.body.tickets && Array.isArray(req.body.tickets)) {
+            updatedData.tickets = req.body.tickets;
+        }
+
+        event = await Event.findByIdAndUpdate(req.params.id, { $set: updatedData }, { new: true });
         res.json(event);
     } catch (err) {
         console.error(err);
