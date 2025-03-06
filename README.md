@@ -53,6 +53,7 @@ npm start
 ### Authentication
 #### Create a role-based user
 **Endpoint:** `POST /api/auth/createuser`
+Input
 ```json
 {
   "name": "Shyam",
@@ -61,6 +62,7 @@ npm start
   "role": "organizer"
 }
 ```
+Output
 ```json
 {
     "success": true,
@@ -70,12 +72,14 @@ npm start
 
 #### User Login
 **Endpoint:** `POST /api/auth/login`
+Input
 ```json
 {
   "email": "organiser5@example.com",
   "password": "Sk12345"
 }
 ```
+Output
 ```json
 {
     "success": true,
@@ -84,6 +88,7 @@ npm start
 ```
 #### Get user data
 **Endpoint:** `POST /api/auth/getuser`
+Output
 ```json
 {
     "_id": "67c9d6a48c1b43006889e4f7",
@@ -99,6 +104,7 @@ npm start
 ### Events Management
 #### Fetch all events
 **Endpoint:** `GET /api/event/fetchall`
+Output
 ```json
 [
     {
@@ -129,6 +135,7 @@ npm start
 ```
 #### Create an event (Only Organizers)
 **Endpoint:** `POST /api/event/create`
+Input
 ```json
 {
   "title": "Debate competition 2025",
@@ -141,6 +148,7 @@ npm start
   ]
 }
 ```
+Output
 ```json
 {
 {
@@ -167,6 +175,7 @@ npm start
 
 #### Update an event (Only Organizers)
 **Endpoint:** `PUT /api/event/update/{eventId}`
+Input
 ```json
 {
 {
@@ -180,6 +189,7 @@ npm start
     ]
 }
 ```
+Output
 ```json
 {
     "_id": "67c9d958ad49e009bf396888",
@@ -205,6 +215,7 @@ npm start
 
 #### Delete an event (Only Organizers)
 **Endpoint:** `DELETE /api/event/delete/{eventId}`
+Output
 ```json
 {
     "message": "Event deleted successfully"
@@ -213,6 +224,7 @@ npm start
 ### Registration & Attendance
 #### Register for an event
 **Endpoint:** `POST /api/registration/register/{eventId}`
+Output
 ```json
 {
     "message": "Registration successful",
@@ -222,12 +234,14 @@ npm start
 
 #### QR Code Scanning (Only Organizers)
 **Endpoint:** `POST /api/registration/scan`
+Input
 ```json
 {
     "qrData": "{\"eventId\": \"67c9da42ad49e009bf396892\", \"userId\": \"67c9ccee65d71c13c091439d\"}"
 }
 
 ```
+Output
 ```json
 {
     "message": "Attendance marked successfully"
