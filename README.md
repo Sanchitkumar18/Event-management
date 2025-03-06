@@ -4,7 +4,7 @@
 Event Management API is a RESTful service that facilitates user authentication, event creation, and registration processes. The API supports role-based access control and QR code-based attendance tracking.
 
 ## Deployed URL
-[Event Management API on Render](https://event-management-kost.onrender.com)
+https://event-management-kost.onrender.com
 
 ## Tech Stack
 - Node.js
@@ -34,7 +34,6 @@ npm install
 ### Environment Variables
 Create a `.env` file and define the necessary environment variables:
 ```
-PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 ```
