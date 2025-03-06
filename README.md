@@ -74,7 +74,34 @@ npm start
 ### Events Management
 #### Fetch all events
 **Endpoint:** `GET /api/event/fetchall`
-
+```json
+[
+    {
+        "_id": "67c9da42ad49e009bf396892",
+        "title": "Debate competition 2025",
+        "description": "A Tech event",
+        "date": "2025-12-18T00:00:00.000Z",
+        "location": "Anna Auditorium",
+        "event_type": "public",
+        "organizer": "67c9d6a48c1b43006889e4f7",
+        "attendees": [
+            "67c9ccee65d71c13c091439d"
+        ],
+        "attended": [
+            "67c9ccee65d71c13c091439d"
+        ],
+        "tickets": [
+            {
+                "tier": "Regular",
+                "price": 150,
+                "available_quantity": 100,
+                "_id": "67c9da42ad49e009bf396893"
+            }
+        ],
+        "__v": 2
+    }
+]
+```
 #### Create an event (Only Organizers)
 **Endpoint:** `POST /api/event/create`
 ```json
