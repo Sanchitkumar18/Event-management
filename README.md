@@ -53,7 +53,8 @@ npm start
 ### Authentication
 #### Create a role-based user
 **Endpoint:** `POST /api/auth/createuser`
-Input
+
+## Input
 ```json
 {
   "name": "Shyam",
@@ -72,7 +73,7 @@ Output
 
 #### User Login
 **Endpoint:** `POST /api/auth/login`
-Input
+## Input
 ```json
 {
   "email": "organiser5@example.com",
@@ -88,7 +89,7 @@ Output
 ```
 #### Get user data
 **Endpoint:** `POST /api/auth/getuser`
-Output
+## Output
 ```json
 {
     "_id": "67c9d6a48c1b43006889e4f7",
@@ -104,7 +105,7 @@ Output
 ### Events Management
 #### Fetch all events
 **Endpoint:** `GET /api/event/fetchall`
-Output
+## Output
 ```json
 [
     {
@@ -135,7 +136,7 @@ Output
 ```
 #### Create an event (Only Organizers)
 **Endpoint:** `POST /api/event/create`
-Input
+## Input
 ```json
 {
   "title": "Debate competition 2025",
@@ -175,7 +176,7 @@ Output
 
 #### Update an event (Only Organizers)
 **Endpoint:** `PUT /api/event/update/{eventId}`
-Input
+## Input
 ```json
 {
 {
@@ -215,7 +216,7 @@ Output
 
 #### Delete an event (Only Organizers)
 **Endpoint:** `DELETE /api/event/delete/{eventId}`
-Output
+## Output
 ```json
 {
     "message": "Event deleted successfully"
@@ -224,7 +225,7 @@ Output
 ### Registration & Attendance
 #### Register for an event
 **Endpoint:** `POST /api/registration/register/{eventId}`
-Output
+## Output
 ```json
 {
     "message": "Registration successful",
@@ -234,7 +235,7 @@ Output
 
 #### QR Code Scanning (Only Organizers)
 **Endpoint:** `POST /api/registration/scan`
-Input
+## Input
 ```json
 {
     "qrData": "{\"eventId\": \"67c9da42ad49e009bf396892\", \"userId\": \"67c9ccee65d71c13c091439d\"}"
