@@ -5,7 +5,7 @@ const checkRole = require('../middleware/checkRole');
 const Event = require('../models/Event');
 const { body, validationResult } = require('express-validator');
 
-// 🔹 Route 1: Create an event (Only Organizer)
+// Route 1: Create an event (Only Organizer)
 router.post('/create', fetchusers, checkRole('organizer'), [
     body('title', 'Title is required').notEmpty(),
     body('description', 'Description is required').notEmpty(),
@@ -47,7 +47,7 @@ router.post('/create', fetchusers, checkRole('organizer'), [
     }
 });
 
-// 🔹 Route 2: Get all public events & user's private events
+//  Route 2: Get all public events & user's private events
 router.get('/fetchall', fetchusers, async (req, res) => {
     try {
         const { date, location, event_type, search } = req.query;
@@ -90,7 +90,7 @@ router.get('/fetchall', fetchusers, async (req, res) => {
     }
 });
 
-// 🔹 Route 3: Update event (Only Organizer)
+//  Route 3: Update event (Only Organizer)
 router.put('/update/:id', fetchusers, checkRole('organizer'), [
     body('tickets').optional().isArray().withMessage('Tickets must be an array'),
     body('tickets.*.tier').optional().isIn(['Regular', 'VIP']).withMessage('Invalid ticket tier'),
@@ -119,7 +119,7 @@ router.put('/update/:id', fetchusers, checkRole('organizer'), [
     }
 });
 
-// 🔹 Route 4: Delete event (Only Organizer)
+//  Route 4: Delete event (Only Organizer)
 router.delete('/delete/:id', fetchusers, checkRole('organizer'), async (req, res) => {
     try {
         let event = await Event.findById(req.params.id);

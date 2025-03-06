@@ -7,7 +7,7 @@ const { body, validationResult } = require('express-validator');
 
 const QRCode = require('qrcode');
 
-// 🔹 Route 5: Register for an event
+// Route 5: Register for an event
 router.post('/register/:eventId', fetchusers, checkRole('attendee'), async (req, res) => {
     try {
         const event = await Event.findById(req.params.eventId);
@@ -31,5 +31,32 @@ router.post('/register/:eventId', fetchusers, checkRole('attendee'), async (req,
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+// Route 6: Scan QR code and mark attendance
+router.post('/scan', fetchusers, checkRole('organizer'), async (req, res) => {
+    try {
+        const { qrData } = req.body; // QR Code content sent from scanner
+        const { eventId, userId } = JSON.parse(qrData);
+
+        const event = await Event.findById(eventId);
+        if (!event) return res.status(404).json({ error: "Event not found" });
+
+        if (!event.attendees.includes(userId)) {
+            return res.status(400).json({ error: "User not registered for this event" });
+        }
+
+        if (event.attended.includes(userId)) {
+            return res.status(400).json({ error: "Attendance already marked" });
+        }
+
+        event.attended.push(userId);
+        await event.save();
+
+        res.json({ message: "Attendance marked successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Invalid QR Code or Internal Server Error' });
+    }
+});
+
 
 module.exports = router;

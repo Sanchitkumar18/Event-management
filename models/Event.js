@@ -39,6 +39,11 @@ const EventSchema = new mongoose.Schema({
         ref: 'User',
         default: []
     },
+    attended: { 
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'User',
+        default: []
+    },
     tickets: {
         type: [TicketSchema],
         default: [{ tier: 'Regular', price: 0, available_quantity: 100 }] 
