@@ -54,7 +54,7 @@ npm start
 #### Create a role-based user
 **Endpoint:** `POST /api/auth/createuser`
 
-## Input
+## Request
 ```json
 {
   "name": "Shyam",
@@ -63,7 +63,7 @@ npm start
   "role": "organizer"
 }
 ```
-Output
+## Response
 ```json
 {
     "success": true,
@@ -73,14 +73,14 @@ Output
 
 #### User Login
 **Endpoint:** `POST /api/auth/login`
-## Input
+## Request
 ```json
 {
   "email": "organiser5@example.com",
   "password": "Sk12345"
 }
 ```
-Output
+## Response
 ```json
 {
     "success": true,
@@ -89,7 +89,7 @@ Output
 ```
 #### Get user data
 **Endpoint:** `POST /api/auth/getuser`
-## Output
+## Response
 ```json
 {
     "_id": "67c9d6a48c1b43006889e4f7",
@@ -105,7 +105,7 @@ Output
 ### Events Management
 #### Fetch all events
 **Endpoint:** `GET /api/event/fetchall`
-## Output
+## Response
 ```json
 [
     {
@@ -136,7 +136,7 @@ Output
 ```
 #### Create an event (Only Organizers)
 **Endpoint:** `POST /api/event/create`
-## Input
+## Request
 ```json
 {
   "title": "Debate competition 2025",
@@ -149,7 +149,7 @@ Output
   ]
 }
 ```
-Output
+## Response
 ```json
 {
 {
@@ -176,7 +176,7 @@ Output
 
 #### Update an event (Only Organizers)
 **Endpoint:** `PUT /api/event/update/{eventId}`
-## Input
+## Request
 ```json
 {
 {
@@ -190,7 +190,7 @@ Output
     ]
 }
 ```
-Output
+## Response
 ```json
 {
     "_id": "67c9d958ad49e009bf396888",
@@ -216,7 +216,7 @@ Output
 
 #### Delete an event (Only Organizers)
 **Endpoint:** `DELETE /api/event/delete/{eventId}`
-## Output
+## Response
 ```json
 {
     "message": "Event deleted successfully"
@@ -225,7 +225,7 @@ Output
 ### Registration & Attendance
 #### Register for an event
 **Endpoint:** `POST /api/registration/register/{eventId}`
-## Output
+## Response
 ```json
 {
     "message": "Registration successful",
@@ -235,14 +235,14 @@ Output
 
 #### QR Code Scanning (Only Organizers)
 **Endpoint:** `POST /api/registration/scan`
-## Input
+## Request
 ```json
 {
     "qrData": "{\"eventId\": \"67c9da42ad49e009bf396892\", \"userId\": \"67c9ccee65d71c13c091439d\"}"
 }
 
 ```
-Output
+## Response
 ```json
 {
     "message": "Attendance marked successfully"
